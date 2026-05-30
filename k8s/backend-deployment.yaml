@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      containers:
+      - name: backend
+        image: rid130905/sdgs-project-backend:v1
+
+        ports:
+        - containerPort: 5000
+
+        env:
+        - name: DB_HOST
+          value: mysql-service
+
+        - name: DB_USER
+          value: root
+
+        - name: DB_PASSWORD
+          value: rootpassword
+
+        - name: DB_NAME
+          value: layanan_desa
+
+        - name: DB_PORT
+          value: "3306"
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
